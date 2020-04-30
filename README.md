@@ -36,7 +36,7 @@ _Adpated from [CCM Site](https://brendenlake.github.io/CCM-site/#final-project)_
 - [x] update proposal
 - [x] lit review draft
 - [ ] clean dataset
-- [ ] bert masked token model
+- [x] bert masked token model [demo](./src/demo.ipynb)
 - [ ] select easy/medium/hard tasks
 - [ ] model easy/medium/hard tasks
 - [ ] compare bert conclusions to childhood development stages
