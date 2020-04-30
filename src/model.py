@@ -29,15 +29,15 @@ class MaskedTokenBert:
         self.data = [line]
         self.size = 1
         
-    def tokenize_data(self, file=None):
+    def tokenize_data(self, text=None):
         '''Tokenizes self.data
         '''
-        # Check that data is loaded
+        # Check that proper data is loaded
         try:
-            if self.data:
+            if self.data and not text:
                 pass
         except:
-            self._load(file) if file else self._load(self.file)
+            self._load_line(text) if text else self._load(self.file)
             
         # Tokenize input
         self.t_data = [self.tokenizer.tokenize(i) for i in self.data]
