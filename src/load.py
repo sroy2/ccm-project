@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-def get_data_path():
+def path():
     '''Helper function to get data path within project.
     
     Returns
@@ -21,10 +21,16 @@ def get_data_path():
     path_to_data = f'{path.absolute().as_posix()}/'
     return path_to_data
     
-def load_data():
+def data(file='masked_data.txt'):
     '''Helper function to load data.
     
     Returns
     -------
+    lines: list
     '''
-    pass
+    location = path()
+    lines = []
+    with open(f'{location}file) as f:
+        for line in f:
+            lines.append(line)
+    return lines
