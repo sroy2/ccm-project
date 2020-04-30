@@ -30,7 +30,7 @@ def data(file='masked_data.txt'):
     '''
     location = path()
     lines = []
-    with open(f'{location}file) as f:
+    with open(f'{location}{file}') as f:
         for line in f:
             lines.append(line)
     return lines
