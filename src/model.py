@@ -15,20 +15,21 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 questions = load.data()
 
 # Tokenize input
-tokenized_questions = []
-for question in questions:
-    tokenized_questions.append(tokenizer.tokenize(question))
-
-### @TODO left off here ###
+tokenized_questions = [tokenizer.tokenize(q) for q in questions]
 
 # Convert token to vocabulary indices
-indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
+indexed_tokens = [tokenizer.convert_tokens_to_ids(tq) for tq in tokenized_questions]
+
 # Define sentence A and B indices associated to 1st and 2nd sentences (see paper)
-segments_ids = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1]
+segments_ids = []
+for tokenized_question in tokenized_questions:
+    length = len(tokenized_question)
+    first_sep = tokenized_question.index('[SEP]')+1
+    segments_ids.append([0]*(first_sep) + [1]*(length-first_sep))
 
 # Convert inputs to PyTorch tensors
-tokens_tensor = torch.tensor([indexed_tokens])
-segments_tensors = torch.tensor([segments_ids])
+tokens_tensors = [torch.tensor([tokens]) for tokens in indexed_tokens]
+segments_tensors = [torch.tensor([segments]) for segments in segments_ids]
 
 # Load pre-trained model (weights)
 model = BertModel.from_pretrained('bert-base-uncased')
@@ -36,6 +37,8 @@ model = BertModel.from_pretrained('bert-base-uncased')
 # Set the model in evaluation mode to deactivate the DropOut modules
 # This is IMPORTANT to have reproducible results during evaluation!
 model.eval()
+
+### @TODO left off here ###
 
 # If you have a GPU, put everything on cuda
 tokens_tensor = tokens_tensor.to('cuda')
