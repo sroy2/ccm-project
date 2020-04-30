@@ -44,6 +44,7 @@ _Adpated from [CCM Site](https://brendenlake.github.io/CCM-site/#final-project)_
 
 
 ## References:
+* [Transformers Quickstart](https://huggingface.co/transformers/quickstart.html)
 * [Ganesh Jawahar - intpret_bert upstream repo](https://ganeshjawahar.github.io/)
 * [Ganesh speaking about interpret_bert](https://vimeo.com/384961703)
 * [Children First Language Acquisition At Age 1-3 Years Old In Balata](http://www.iosrjournals.org/iosr-jhss/papers/Vol20-issue8/Version-5/F020855157.pdf)
