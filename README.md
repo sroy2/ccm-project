@@ -17,13 +17,14 @@ _Selected from [CCM Project Site](https://brendenlake.github.io/CCM-site/final_p
 
 ## Timeline
 _Adpated from [CCM Site](https://brendenlake.github.io/CCM-site/#final-project)_
-1. (26-Mar) Initial Meeting
-2. (02-Apr) Proposal Review
-3. (06-Apr) Proposal Submission [complete](#approved-proposal)
+- [x] (26-Mar) Initial Meeting
+- [x] (02-Apr) Proposal Review
+- [x] (06-Apr) Proposal Submission [complete](#approved-proposal)
   * The final project proposal is due Monday, April 6 (one half page written). Please submit via email to instructors-ccm-spring2020@nyuccl.org with the file name lastname1-lastname2-lastname3-ccm-proposal.pdf.
   * https://piazza.com/class/k5cskqm4l1d4ei?cid=87
-4. (01-May) Friday 1PM EST [Zoom meeting](https://nyu.zoom.us/j/5079167320) with [Prof Cournane](https://wp.nyu.edu/cournane/)
-5. (13-May) Final Project Due
+- [x] (01-May) Friday 1PM EST [Zoom meeting](https://nyu.zoom.us/j/5079167320) with [Prof Cournane](https://wp.nyu.edu/cournane/)
+- [ ] (07-May) Regroup
+- [ ] (13-May) Final Project Due
 
 ## Dataset sources: 
 * Kumon
