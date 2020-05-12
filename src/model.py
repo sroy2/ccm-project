@@ -125,15 +125,19 @@ class MaskedTokenBert:
             self.model()
         
         self.p_idx = []
+        self.p_rank = []
         self.p_items = []
         for i in range(self.size):
             idx = []
+            rank = []
             items = []
             for m in self.masks[i]:
                 pred_idx = torch.argsort(-self.predictions[i][0, m])[:top_n]
                 idx.append([x.item() for x in pred_idx])
+                rank.append([self.predictions[i][0,m][x] for x in pred_idx])
                 items.append([self._decode(x.item()) for x in pred_idx])
             self.p_idx.append(idx)
+            self.p_rank.append(rank)
             self.p_items.append(items)
 
         return self.p_items
