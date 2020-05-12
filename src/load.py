@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import pandas
 
 def path():
     '''Helper function to get data path within project.
@@ -21,16 +22,12 @@ def path():
     path_to_data = f'{path.absolute().as_posix()}/'
     return path_to_data
     
-def data(file='masked_data.txt'):
+def data(file='KumonTaskData.csv'):
     '''Helper function to load data.
     
     Returns
     -------
-    lines: list
+    df: csv file read in
     '''
-    location = path()
-    lines = []
-    with open(f'{location}{file}') as f:
-        for line in f:
-            lines.append(line)
-    return lines
+    split = lambda text: [word.strip() for word in text.split(',')]
+    return pandas.read_csv(path()+file, converters={'Masked Words': split}).dropna()

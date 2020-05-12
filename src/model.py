@@ -10,7 +10,7 @@ import logging
 class MaskedTokenBert:
     '''Class for predicting masked tokens
     '''
-    def __init__(self, bert='bert-base-uncased', file='masked_data.txt', debug=False):
+    def __init__(self, bert='bert-base-uncased', file='KumonTaskData.csv', debug=False):
         logging.basicConfig(level=logging.ERROR)
         if debug:
             logging.basicConfig(level=logging.INFO)
@@ -22,8 +22,9 @@ class MaskedTokenBert:
     def _load(self, file=None):
         # Loads list of questions from dataset
         self.file = file if file else self.file
-        self.data = load.data(file)
-        self.size = len(self.data)
+        self.df = load.data(file)
+        self.data = self.df.Task.values
+        self.size = self.data.size
 
     def _load_line(self, line):
         self.data = [line]
@@ -135,3 +136,47 @@ class MaskedTokenBert:
             self.p_items.append(items)
 
         return self.p_items
+    
+    def score(self, show_wrong=False):
+        '''Returns float of bert's score (right/total); show_wrong to print bad predictions
+        '''
+        def print_wrong(task, mask):
+            actual = truth[task][mask]
+            pred = preds[task][mask]
+            print(f'({task},{mask}: actual={actual} bert={pred[0]}')
+            if actual in pred:
+                print(f"{actual} was bert's #{pred.index(actual)+1} choice")
+        
+        truth = self.df['Masked Words']
+        preds = self.p_items
+        
+        right = []
+        wrong = []
+        for task in range(self.size):
+            for mask in range(len(truth[task])):
+                try:
+                    if truth[task][mask] == preds[task][mask][0]:
+                        right.append((task,mask))
+                    else:
+                        wrong.append((task,mask))
+                        if show_wrong:
+                            print_wrong(task,mask)
+                except:
+                    print(f"{task},{mask} broke... moving on")
+                    continue
+                
+        print(f'Bert got {len(right)}/{len(right)+len(wrong)} correct.')
+        return round(len(right)/(len(right)+len(wrong)),2)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
