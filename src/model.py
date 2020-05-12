@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import load
 import torch
+import pandas
 from transformers import BertTokenizer, BertModel, BertForMaskedLM
 
 # OPTIONAL: if you want to have more information on what's happening under the hood, activate the logger as follows
@@ -138,7 +139,7 @@ class MaskedTokenBert:
         return self.p_items
     
     def score(self, show_wrong=False):
-        '''Returns float of bert's score (right/total); show_wrong to print bad predictions
+        '''Returns list of bert's scores per task; show_wrong to print bad predictions
         '''
         def print_wrong(task, mask):
             actual = truth[task][mask]
@@ -146,27 +147,54 @@ class MaskedTokenBert:
             print(f'({task},{mask}: actual={actual} bert={pred[0]}')
             if actual in pred:
                 print(f"{actual} was bert's #{pred.index(actual)+1} choice")
+                
+        def kumon_score(num_wrong):
+            d =  {0:100.0, 1:80.0, 2:70.0}
+            return d.get(num_wrong, 69.0)
+            
         
         truth = self.df['Masked Words']
         preds = self.p_items
         
         right = []
         wrong = []
+        self.page_scores = {}
+        
+        current_page  = None
+        wrong_on_page = 0
         for task in range(self.size):
+            if current_page != self.df['Workbook Page'][task]:
+                if current_page:
+                    self.page_scores.update({current_page: kumon_score(wrong_on_page)})
+                current_page = self.df['Workbook Page'][task]
+                wrong_on_page = 0
+                
+            wrong_on_task = 0
             for mask in range(len(truth[task])):
                 try:
                     if truth[task][mask] == preds[task][mask][0]:
                         right.append((task,mask))
                     else:
                         wrong.append((task,mask))
+                        wrong_on_task += 1
                         if show_wrong:
                             print_wrong(task,mask)
                 except:
                     print(f"{task},{mask} broke... moving on")
                     continue
                 
+            if wrong_on_task:
+                wrong_on_page += 1
+                
+        self.page_scores.update({current_page: kumon_score(wrong_on_page)})
+        
+        scores = []
+        for task in range(self.size):
+            scores.append(self.page_scores[self.df['Workbook Page'][task]])
+        
+        self.df.insert(3, "Bert Score", pandas.Series(scores))
         print(f'Bert got {len(right)}/{len(right)+len(wrong)} correct.')
-        return round(len(right)/(len(right)+len(wrong)),2)
+        return scores
         
         
         
