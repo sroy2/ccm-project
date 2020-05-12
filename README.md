@@ -23,7 +23,6 @@ _Adpated from [CCM Site](https://brendenlake.github.io/CCM-site/#final-project)_
   * The final project proposal is due Monday, April 6 (one half page written). Please submit via email to instructors-ccm-spring2020@nyuccl.org with the file name lastname1-lastname2-lastname3-ccm-proposal.pdf.
   * https://piazza.com/class/k5cskqm4l1d4ei?cid=87
 - [x] (01-May) Friday 1PM EST [Zoom meeting](https://nyu.zoom.us/j/5079167320) with [Prof Cournane](https://wp.nyu.edu/cournane/)
-- [ ] (07-May) Regroup
 - [ ] (13-May) Final Project Due
 
 ## Dataset sources: 
@@ -36,12 +35,10 @@ _Adpated from [CCM Site](https://brendenlake.github.io/CCM-site/#final-project)_
 - [x] set up git
 - [x] update proposal
 - [x] lit review draft
-- [ ] clean dataset
+- [x] clean dataset
 - [x] bert masked token model [demo](./src/demo.ipynb)
-- [ ] select easy/medium/hard tasks
-- [ ] model easy/medium/hard tasks
+- [x] select easy/medium/hard tasks
 - [ ] compare bert conclusions to childhood development stages
-- [ ] analyze bert layer attention
 
 
 ## References:
