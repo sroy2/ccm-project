@@ -159,6 +159,7 @@ class MaskedTokenBert:
         right = []
         wrong = []
         self.page_scores = {}
+        bert_predictions = []
         
         current_page  = None
         wrong_on_page = 0
@@ -168,10 +169,12 @@ class MaskedTokenBert:
                     self.page_scores.update({current_page: kumon_score(wrong_on_page)})
                 current_page = self.df['Workbook Page'][task]
                 wrong_on_page = 0
-                
+            
             wrong_on_task = 0
+            bert_masks = []
             for mask in range(len(truth[task])):
                 try:
+                    bert_masks.append(preds[task][mask][0])
                     if truth[task][mask] == preds[task][mask][0]:
                         right.append((task,mask))
                     else:
@@ -183,6 +186,7 @@ class MaskedTokenBert:
                     print(f"{task},{mask} broke... moving on")
                     continue
                 
+            bert_predictions.append(bert_masks)
             if wrong_on_task:
                 wrong_on_page += 1
                 
@@ -193,6 +197,7 @@ class MaskedTokenBert:
             scores.append(self.page_scores[self.df['Workbook Page'][task]])
         
         self.df.insert(3, "Bert Score", pandas.Series(scores))
+        self.df.insert(6, "Bert Masks", pandas.Series(bert_predictions))
         print(f'Bert got {len(right)}/{len(right)+len(wrong)} correct.')
         return scores
         
