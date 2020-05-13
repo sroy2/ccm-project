@@ -25,7 +25,7 @@ _Adpated from [CCM Site](https://brendenlake.github.io/CCM-site/#final-project)_
 - [x] (30-Apr) [Demo Notebook](src/demo.ipynb)
 - [x] (01-May) Friday 1PM EST [Zoom meeting](https://nyu.zoom.us/j/5079167320) with [Prof Cournane](https://wp.nyu.edu/cournane/)
 - [x] (12-May) Review 
-- [ ] (13-May) Final Project Due
+- [x] (13-May) Final Project Due
   * The final project is due Wednesday 5/13. Please submit via email to instructors-ccm-spring2020@nyuccl.org with the file name lastname1-lastname2-lastname3-ccm-final.pdf.
   * https://piazza.com/class/k5cskqm4l1d4ei?cid=197
 
@@ -38,6 +38,7 @@ _Adpated from [CCM Site](https://brendenlake.github.io/CCM-site/#final-project)_
  - [transformers](https://github.com/huggingface/transformers)
 
 ## Working Documents
+* [Report](report.pdf)
 * [Google Drive](https://drive.google.com/drive/folders/16DHSToewAcIkIytzBF9Lzkr-OV284a1c)
 
 ## Road Map
@@ -47,7 +48,7 @@ _Adpated from [CCM Site](https://brendenlake.github.io/CCM-site/#final-project)_
 - [x] clean dataset
 - [x] bert masked token model [demo](./src/demo.ipynb)
 - [x] select tasks
-- [ ] compare bert conclusions to childhood development stages
+- [x] compare task performance
 
 
 ## References:
