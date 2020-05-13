@@ -117,13 +117,14 @@ class MaskedTokenBert:
     def predict(self, top_n=5):
         '''Predicts the top_n (default=5) candidates for each [MASK]
         '''
-        # Check we have a model to predict from
+        # Check we already have predictions; else generate model
         try:
             if self.predictions:
                 pass
         except:
             self.model()
         
+        # sort over model predictions and store indicies, rank/weights, and predictions
         self.p_idx = []
         self.p_rank = []
         self.p_items = []
@@ -152,6 +153,7 @@ class MaskedTokenBert:
             if actual in pred:
                 print(f"{actual} was bert's #{pred.index(actual)+1} choice")
                 
+        # Custon Kumon scoring metric
         def kumon_score(num_wrong):
             d =  {0:100.0, 1:80.0, 2:70.0}
             return d.get(num_wrong, 69.0)
@@ -167,7 +169,10 @@ class MaskedTokenBert:
         
         current_page  = None
         wrong_on_page = 0
+        
+        # Iterate over each task
         for task in range(self.size):
+            # Kumon scores are grouped by page; so here we track the current page
             if current_page != self.df['Workbook Page'][task]:
                 if current_page:
                     self.page_scores.update({current_page: kumon_score(wrong_on_page)})
@@ -176,6 +181,8 @@ class MaskedTokenBert:
             
             wrong_on_task = 0
             bert_masks = []
+            
+            # Each task may have multiple tasks; track how many are wrong
             for mask in range(len(truth[task])):
                 try:
                     bert_masks.append(preds[task][mask][0])
@@ -189,13 +196,15 @@ class MaskedTokenBert:
                 except:
                     print(f"{task},{mask} broke... moving on")
                     continue
-                
+            
+            # If any masks are wrong - bert failed this task
             bert_predictions.append(bert_masks)
             if wrong_on_task:
                 wrong_on_page += 1
                 
         self.page_scores.update({current_page: kumon_score(wrong_on_page)})
         
+        # Putting values back into pandas so for easy comparison/saving to file
         scores = []
         for task in range(self.size):
             scores.append(self.page_scores[self.df['Workbook Page'][task]])
